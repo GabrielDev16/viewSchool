@@ -1,4 +1,5 @@
 <?php
+
 require_once '../app/config/init.php';
 
 // If already logged in, redirect to dashboard

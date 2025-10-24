@@ -1,4 +1,5 @@
 <?php
+require_once '../app/config/auth_admin.php';
 require_once '../app/config/init.php';
 
 // Check if user is logged in

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?php echo BASE_URL; ?>index.php">
+        <a class="navbar-brand" href="index.php">
             <img src="<?php echo BASE_URL; ?>../assets/img/LogoGestCTT.png" alt="GestCTT Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,17 +10,17 @@
             <ul class="navbar-nav ms-auto">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>index.php">
+                        <a class="nav-link" href="/viewschool/public/index.php">
                             <i class="bi bi-house-door"></i> Início
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>alas.php">
-                            <i class="bi bi-building"></i> Alas
+                        <a class="nav-link" href="/viewschool/public/alas.php">
+                            <i class="bi bi-houses"></i> Alas
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>equipamentos.php">
+                        <a class="nav-link" href="/viewschool/public/equipamentos.php">
                             <i class="bi bi-tools"></i> Equipamentos
                         </a>
                     </li>
@@ -31,10 +31,10 @@
                                 <i class="bi bi-gear"></i> Administração
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/usuarios.php">Usuários</a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/prestadores.php">Prestadores</a></li>
+                                <li><a class="dropdown-item" href="/viewschool/public/admin/usuarios.php">Usuários</a></li>
+                                <li><a class="dropdown-item" href="/viewschool/public/admin/prestadores.php">Prestadores</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/relatorios.php">Relatórios</a></li>
+                                <li><a class="dropdown-item" href="/viewschool/public/admin/relatorios.php">Relatórios</a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
