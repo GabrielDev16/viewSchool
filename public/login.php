@@ -84,7 +84,7 @@ include '../app/views/includes/header.php';
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <div class="card login-card shadow">
-                    <div class="card-body p-5">
+                    <div class="card-body">
                         <div class="text-center mb-4">
                             <img src="../assets/img/LogoGestCTT.png" alt="GestCTT Logo" class="img-fluid mb-3" style="max-width: 200px;">
                             <h3 class="fw-bold">Bem-vindo ao GestCTT</h3>
