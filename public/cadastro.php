@@ -1,5 +1,4 @@
 <?php
-
 require_once '../app/config/init.php';
 
 // If already logged in, redirect to dashboard
@@ -59,13 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $page_title = 'Cadastro';
 ?>
-
 <?php include '../app/views/includes/header.php'; ?>
 
 <div class="login-container">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
+            <div class="col-lg-8 col-xl-7">
                 <div class="card login-card shadow">
                     <div class="card-body p-5">
                         <div class="text-center mb-4">
@@ -87,59 +85,58 @@ $page_title = 'Cadastro';
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         <?php endif; ?>
-                        
+
+                        <!-- FORMULÁRIO GRID INÍCIO -->
                         <form method="POST" action="" class="needs-validation" novalidate>
-                            <div class="mb-3">
-                                <label for="nome" class="form-label">Nome Completo *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                    <input type="text" class="form-control" id="nome" name="nome" required>
-                                </div>
+                          <div class="row g-3">
+                            <div class="col-12">
+                              <label for="nome" class="form-label">Nome Completo *</label>
+                              <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo htmlspecialchars($nome ?? ''); ?>" required>
+                              </div>
                             </div>
-                            
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
+                            <div class="col-12 col-md-6">
+                              <label for="email" class="form-label">Email *</label>
+                              <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
+                              </div>
                             </div>
-                            
-                            <div class="mb-3">
-                                <label for="telefone" class="form-label">Telefone</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                    <input type="tel" class="form-control" id="telefone" name="telefone">
-                                </div>
+                            <div class="col-12 col-md-6">
+                              <label for="telefone" class="form-label">Telefone</label>
+                              <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                <input type="tel" class="form-control" id="telefone" name="telefone" value="<?php echo htmlspecialchars($telefone ?? ''); ?>">
+                              </div>
                             </div>
-                            
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Senha *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                    <input type="password" class="form-control" id="password" name="password" required minlength="6">
-                                </div>
-                                <small class="text-muted">Mínimo de 6 caracteres</small>
+                            <div class="col-12 col-md-6">
+                              <label for="password" class="form-label">Senha *</label>
+                              <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" id="password" name="password" required minlength="6">
+                              </div>
+                              <small class="text-muted">Mínimo de 6 caracteres</small>
                             </div>
-                            
-                            <div class="mb-3">
-                                <label for="confirm_password" class="form-label">Confirmar Senha *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required minlength="6">
-                                </div>
+                            <div class="col-12 col-md-6">
+                              <label for="confirm_password" class="form-label">Confirmar Senha *</label>
+                              <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required minlength="6">
+                              </div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary w-100 btn-custom">
+                            <div class="col-12">
+                              <button type="submit" class="btn btn-primary w-100 btn-custom">
                                 <i class="bi bi-person-plus"></i> Cadastrar
-                            </button>
+                              </button>
+                            </div>
+                            <div class="col-12 text-center">
+                              <hr>
+                              <p class="mb-0">Já tem uma conta? <a href="login.php" class="text-decoration-none">Faça login</a></p>
+                            </div>
+                          </div>
                         </form>
-                        
-                        <hr class="my-4">
-                        
-                        <div class="text-center">
-                            <p class="mb-0">Já tem uma conta? <a href="login.php" class="text-decoration-none">Faça login</a></p>
-                        </div>
+                        <!-- FORMULÁRIO GRID FIM -->
                     </div>
                 </div>
             </div>

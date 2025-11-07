@@ -55,18 +55,64 @@ body {
 }
 
 .login-container {
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 15px;
+  min-height: 100vh; /* altura mínima ocupando toda a tela */
+  padding: 40px 15px; /* espaçamento interno para topo/baixo e laterais */
+  box-sizing: border-box;
+  background-color: #f5f5f5; /* mesma cor de fundo da página */
+  overflow: hidden;
 }
 
-.login-card {
-  max-width: 450px;
-  width: 100%;
-  /* local onde se define  a altura do do container pai que guarda o formulario de login */
+.container {
+  max-width: 4600px; /* limita largura máxima */
+  width: 100%; /* máximo até o limite */
+  box-sizing: border-box;
 }
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 20px 10px;
+  }
+  .container {
+    max-width: 100%;
+  }
+}
+
+.boxForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  width: 100vw;
+}
+
+.corpoCard {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logoGestCTT {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 16px;
+  max-width: 200px;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .corpoCard {
+    width: 90%;
+    padding: 20px;
+  }
 
 .table-hover tbody tr:hover {
   background-color: rgba(0, 123, 255, 0.1);
@@ -185,4 +231,5 @@ footer {
   .content-wrapper {
     padding: 15px;
   }
+}
 }
