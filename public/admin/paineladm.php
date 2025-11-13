@@ -13,19 +13,58 @@ include_once '../../app/views/includes/navbar.php';
 ?>
 
 <!-- Início do conteúdo principal da página -->
-<div class="container mt-5">
+<div class="container mt-2">
     
     <!-- Cabeçalho de Boas-Vindas -->
     <div class="row mb-4">
         <div class="col-12">
-            <h1 class="display-5">Painel Administrativo</h1>
+            <h1 class="display-5 text-center">Painel Administrativo</h1>
             <!-- Pega o nome do usuário da sessão para uma saudação personalizada -->
-            <p class="lead">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>. Gerencie o sistema a partir daqui.</p>
+            <p class="lead text-center">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>. Gerencie o sistema a partir daqui.</p>
         </div>
     </div>
 
     <!-- Linha com os Cartões de Menu -->
     <div class="row">
+
+        <!-- Cartão para Gerenciar Usuários -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i class="fa-solid fa-house"  style="font-size: 3rem; color: #0d6efd;"></i>
+                    <h5 class="card-title mt-3">Página Inicial</h5>
+                    <p class="card-text">Ir a página inicial do sistema.</p>
+                    <!-- O `stretched-link` faz todo o cartão ser clicável -->
+                    <a href="../index.php" class="btn btn-primary stretched-link">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cartão para Visualizar Relatórios -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i class="fa-regular fa-building"  style="font-size: 3rem; color: #0d6efd;"></i>
+                    <h5 class="card-title mt-3">Visualizar Salas</h5>
+                    <p class="card-text">Veja todas as salas da instituição.</p>
+                    <a href="../alas.php" class="btn btn-primary stretched-link">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cartão para Gerenciar Prestadores -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <i class="fa-solid fa-toolbox"  style="font-size: 3rem; color: #0d6efd;"></i>
+                    <h5 class="card-title mt-3">Ver Equipamentos</h5>
+                    <p class="card-text">Veja todos os equipamenros e status de cada um deles.</p>
+                    <a href="../equipamentos.php" class="btn btn-primary stretched-link">Acessar</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Adicione outros cartões aqui conforme precisar, por exemplo, para equipamentos, alas, etc. -->
 
         <!-- Cartão para Gerenciar Usuários -->
         <div class="col-md-4 mb-4">
@@ -44,10 +83,10 @@ include_once '../../app/views/includes/navbar.php';
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-body text-center p-4">
-                    <i class="bi bi-file-earmark-text-fill" style="font-size: 3rem; color: #198754;"></i>
+                    <i class="bi bi-file-earmark-text-fill" style="font-size: 3rem; color: #0d6efd;"></i>
                     <h5 class="card-title mt-3">Visualizar Relatórios</h5>
                     <p class="card-text">Veja os problemas e chamados reportados pelos funcionários.</p>
-                    <a href="relatorios.php" class="btn btn-success stretched-link">Acessar</a>
+                    <a href="relatorios.php" class="btn btn-primary stretched-link">Acessar</a>
                 </div>
             </div>
         </div>
@@ -56,15 +95,13 @@ include_once '../../app/views/includes/navbar.php';
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-body text-center p-4">
-                    <i class="bi bi-person-badge-fill" style="font-size: 3rem; color: #ffc107;"></i>
+                    <i class="bi bi-person-badge-fill" style="font-size: 3rem; color: #0d6efd;"></i>
                     <h5 class="card-title mt-3">Gerenciar Prestadores</h5>
                     <p class="card-text">Adicione ou edite as informações dos prestadores de serviço.</p>
-                    <a href="prestadores.php" class="btn btn-warning stretched-link">Acessar</a>
+                    <a href="prestadores.php" class="btn btn-primary stretched-link">Acessar</a>
                 </div>
             </div>
         </div>
-        
-        <!-- Adicione outros cartões aqui conforme precisar, por exemplo, para equipamentos, alas, etc. -->
 
     </div>
 </div>
