@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $page_title = 'Reportar Problema em ' . htmlspecialchars($nome_equipamento);
 include_once '../../app/views/includes/header.php';
-include_once '../../app/views/includes/navbar.php';
+
 ?>
 
 <div class="container mt-5">
@@ -94,7 +94,11 @@ include_once '../../app/views/includes/navbar.php';
                                 <textarea class="form-control" id="descricao" name="descricao" rows="5" placeholder="Ex: Tentei ligar o computador pressionando o botão, mas nada acontece. A tela permanece preta e não há nenhum barulho vindo da CPU." required></textarea>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <a href="equipamentos.php?ala_id=<?php echo $ala_id_do_equipamento_se_tiver; ?>" class="btn btn-secondary me-2">Cancelar</a>
+                                <!-- 
+                                botão para reornar com id que tinha, sistema que era usado antes do retornar para o arquivo anterior
+                                <a href="equipamentos.php?ala_id=<?php echo $ala_id_do_equipamento_se_tiver; ?>" class="btn btn-secondary me-2">Cancelar</a> -->
+                                
+                                <a href="equipamentos.php" class="btn btn-secondary me-2">Cancelar</a>
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-send-fill"></i> Enviar Relatório
                                 </button>
