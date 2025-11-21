@@ -33,7 +33,10 @@
                             <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                                 <li><a class="dropdown-item" href="/viewschool/public/admin/usuarios.php">Usuários</a></li>
                                 <li><a class="dropdown-item" href="/viewschool/public/admin/prestadores.php">Prestadores</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                <li><a class="dropdown-item" href="/viewschool/public/equipamentos_problema.php">Situação</a></li>
+                                <li></li>   
+                                <hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/viewschool/public/admin/relatorios.php">Relatórios</a></li>
                             </ul>
                         </li>
