@@ -28,12 +28,22 @@ CREATE TABLE `ala` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `ala` */
 
 insert  into `ala`(`id`,`nome`,`descricao`,`status`,`created_at`,`updated_at`) values 
-(40,'Sala 01','Sala de Aula','ativo','2025-11-13 14:09:44','2025-11-13 14:09:44');
+(41,'Sala de Assistência Estudantil','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(42,'Sala 01','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(43,'Sala 02','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(44,'Sala 03','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(45,'Sala 04','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(46,'Sala 05','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(47,'Sala 06','Laboratório de Informática','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(48,'Sala 07','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(49,'Sala 08','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(50,'Sala 09','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12'),
+(51,'Sala 10','Sala de Aula','ativo','2025-11-21 18:06:12','2025-11-21 18:06:12');
 
 /*Table structure for table `equipamentos` */
 
@@ -49,16 +59,13 @@ CREATE TABLE `equipamentos` (
   `status` enum('ativo','inativo','problema') DEFAULT 'ativo',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `numero_tombamento` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ala` (`fk_ala`),
   CONSTRAINT `equipamentos_ibfk_1` FOREIGN KEY (`fk_ala`) REFERENCES `ala` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=568 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `equipamentos` */
-
-insert  into `equipamentos`(`id`,`nome`,`tipo`,`descricao`,`imagem`,`fk_ala`,`status`,`created_at`,`updated_at`) values 
-(13,'Projetor Epson','Projetor','Projetor Epson ','uploads/equipamentos/6916112415dc1.webp',40,'problema','2025-11-13 14:11:00','2025-11-13 14:11:50'),
-(14,'Projetor Epson','Projetor','Projetor Epson ','uploads/equipamentos/6916115daec51.webp',40,'ativo','2025-11-13 14:11:57','2025-11-13 14:11:57');
 
 /*Table structure for table `manutencoes` */
 
@@ -105,12 +112,6 @@ CREATE TABLE `prestadores` (
 
 /*Data for the table `prestadores` */
 
-insert  into `prestadores`(`id`,`nome`,`empresa`,`telefone`,`email`,`especialidade`,`status`,`created_at`,`updated_at`) values 
-(1,'João Silva','Climatização Total','(11) 3333-4444','joao@climatizacao.com','Ar Condicionado','inativo','2025-10-07 19:20:19','2025-11-13 12:20:09'),
-(2,'Maria Santos','Elétrica Express','(11) 5555-6666','maria@eletrica.com','Elétrica','inativo','2025-10-07 19:20:19','2025-11-13 12:20:11'),
-(3,'Pedro Costa','TI Solutions','(11) 7777-8888','pedro@tisolutions.com','Informática','inativo','2025-10-07 19:20:19','2025-11-13 12:20:13'),
-(4,'Airan','AR Refrigerações','8932016244','gayep87325@dropeso.com','Ar Condicionado','inativo','2025-10-31 08:35:51','2025-11-13 12:20:07');
-
 /*Table structure for table `problemas` */
 
 DROP TABLE IF EXISTS `problemas`;
@@ -128,12 +129,9 @@ CREATE TABLE `problemas` (
   KEY `fk_usuario` (`fk_usuario`),
   CONSTRAINT `problemas_ibfk_1` FOREIGN KEY (`fk_equipamento`) REFERENCES `equipamentos` (`id`),
   CONSTRAINT `problemas_ibfk_2` FOREIGN KEY (`fk_usuario`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `problemas` */
-
-insert  into `problemas`(`id`,`fk_equipamento`,`fk_usuario`,`titulo`,`descricao`,`status`,`data_reporte`) values 
-(3,13,12,'Projetor não liga','quando coloco na tomada ou aperto o interruptor o projetor não liga','aberto','2025-11-13 14:11:50');
 
 /*Table structure for table `usuarios` */
 
@@ -153,16 +151,12 @@ CREATE TABLE `usuarios` (
   `remember_token_expires_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `usuarios` */
 
 insert  into `usuarios`(`id`,`nome`,`email`,`senha`,`telefone`,`tipo`,`status`,`created_at`,`updated_at`,`remember_token`,`remember_token_expires_at`) values 
-(12,'Gabriel','jooaogabriel08.2007@gmail.com','$2y$10$f5gfbFFUs4enaRBev3/lter0zOhnICp9vV8ho6bMrbktJ/MRSLdEe','86995545082','admin','ativo','2025-10-24 09:39:15','2025-11-21 09:26:42',NULL,NULL),
-(13,'funcionario','funcionario@gestctt.com','$2y$10$aAqE4VVGHT5ao79EhTLLEOIii2K5S0fFWvX.L86VQUzivWXZQroaG','(89) 3381-2499','funcionario','inativo','2025-10-24 10:09:22','2025-11-21 13:36:46',NULL,NULL),
-(14,'miguel','miguel@gmail.com','$2y$10$M2iKxxqgBPDdwqJdCfZn2.Fh9Tio8a3BsH6.3Wgy3yODOdVQEt.na','995545082','funcionario','inativo','2025-10-31 08:00:57','2025-11-21 13:36:52',NULL,NULL),
-(15,'Marcos','marcos@gmail.com','$2y$10$11K8urhjsWtm24NNayW9E.q9gASJw99930IJIZ8ZllpIx96hpKlou','995545082','funcionario','inativo','2025-10-31 08:30:36','2025-11-21 13:36:50',NULL,NULL),
-(16,'ar','ar@gmail.com','$2y$10$EoKW1mZPgu6nl0eLkhfuledMSKD/XH1bcVrTYkapYM1M6dDvqiGQy','86988695049','funcionario','inativo','2025-11-13 12:20:43','2025-11-21 13:36:48',NULL,NULL);
+(18,'João Gabriel','jooaogabriel08.2007@gmail.com','$2y$10$JaafmIDXX4Ei8XlSBWwUJ.wRx/LWy7QdoTQMGlRBjh3qjpoGegOA.','995545082','admin','ativo','2025-11-21 18:12:47','2025-11-21 18:13:06',NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

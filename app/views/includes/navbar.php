@@ -31,13 +31,13 @@
                                 <i class="bi bi-gear"></i> Administração
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                <li><a class="dropdown-item" href="/viewschool/public/admin/usuarios.php">Usuários</a></li>
-                                <li><a class="dropdown-item" href="/viewschool/public/admin/prestadores.php">Prestadores</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/usuarios.php">Usuários</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/prestadores.php">Prestadores</a></li>
                                 <li>
-                                <li><a class="dropdown-item" href="/viewschool/public/equipamentos_problema.php">Situação</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/equipamentos_problema.php">Situação</a></li>
                                 <li></li>   
                                 <hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/viewschool/public/admin/relatorios.php">Relatórios</a></li>
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>admin/relatorios.php">Relatórios</a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
