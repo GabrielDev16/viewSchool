@@ -12,7 +12,7 @@ $page_title = 'Selecionar Sala';
 
 // Os caminhos dos includes de views também precisam subir dois níveis
 include_once '../../app/views/includes/header.php';
-include_once '../../app/views/includes/navbar.php';
+
 ?>
 
 <div class="container mt-5">
