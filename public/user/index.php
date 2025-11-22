@@ -6,6 +6,7 @@ $page_title = 'Painel do Usuário';
 
 // Caminhos corrigidos para subir dois níveis (de /public/user/ para a raiz)
 include_once '../../app/views/includes/header.php';
+include_once '../../app/views/includes/navbar_user.php';
 
 ?>
 

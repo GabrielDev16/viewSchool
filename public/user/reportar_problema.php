@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $page_title = 'Reportar Problema em ' . htmlspecialchars($nome_equipamento);
 include_once '../../app/views/includes/header.php';
+include_once '../../app/views/includes/navbar_user.php';
 
 ?>
 

@@ -31,6 +31,7 @@ $equipamentos = $stmt_equip->get_result()->fetch_all(MYSQLI_ASSOC);
 $page_title = 'Equipamentos em ' . htmlspecialchars($nome_ala);
 
 include_once '../../app/views/includes/header.php';
+include_once '../../app/views/includes/navbar_user.php';
 
 ?>
 
