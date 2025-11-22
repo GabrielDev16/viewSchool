@@ -47,7 +47,7 @@
                             <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($_SESSION['user_name']); ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>perfil.php">Meu Perfil</a></li>
+                            <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/perfil.php">Meu Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>logout.php">Sair</a></li>
                         </ul>
