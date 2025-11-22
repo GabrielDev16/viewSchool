@@ -70,7 +70,7 @@ Sistema completo de gestão de equipamentos escolares desenvolvido em PHP com Bo
    - Edite o arquivo `app/config/init.php`
    - Ajuste a constante BASE_URL de acordo com seu ambiente:
      ```php
-     define('BASE_URL', 'http://localhost/gestctt_new/public/');
+     define('BASE_URL', 'http://localhost/viewSchool/public/');
      ```
 
 5. **Configurar permissões**
@@ -84,40 +84,89 @@ Sistema completo de gestão de equipamentos escolares desenvolvido em PHP com Bo
 
 ## 👤 Credenciais Padrão
 
-**Administrador:**
-- Email: `admin@gestctt.com`
-- Senha: `admin123`
-
-**Funcionário:**
-- Email: `funcionario@gestctt.com`
-- Senha: `admin123`
 
 ⚠️ **IMPORTANTE:** Altere essas senhas após o primeiro acesso!
 
 ## 📁 Estrutura de Diretórios
 
 ```
-gestctt_new/
-├── app/
-│   ├── config/          # Configurações do sistema
-│   ├── controllers/     # Controladores (futuro)
-│   ├── models/          # Modelos de dados (futuro)
-│   ├── views/           # Views e templates
-│   │   └── includes/    # Componentes reutilizáveis
-│   └── database/        # Scripts SQL
-├── assets/
-│   ├── css/            # Estilos CSS
-│   ├── js/             # JavaScript
-│   └── img/            # Imagens do sistema
-├── public/             # Arquivos públicos
-│   ├── admin/          # Área administrativa
-│   ├── index.php       # Dashboard
-│   ├── login.php       # Login
-│   ├── cadastro.php    # Cadastro
-│   ├── alas.php        # Gerenciar alas
-│   └── equipamentos.php # Gerenciar equipamentos
-└── uploads/            # Uploads de usuários
-    └── equipamentos/   # Imagens de equipamentos
+GestCTT:
+│   index.php
+│   README.md
+│   
+├───app
+│   ├───config
+│   │       auth_admin.php
+│   │       auth_user.php
+│   │       database.php
+│   │       init.php
+│   │
+│   ├───database
+│   │       bd_cttguest.sql
+│   │       gestctt_schema.sql
+│   │
+│   └───views
+│       └───includes
+│               footer.php
+│               header.php
+│               navbar.php
+│               navbar_user.php
+│
+├───assets
+│   ├───css
+│   │       style.css
+│   │
+│   ├───img
+│   │       FalvIcon GestCTT.png
+│   │       LogoGestCTT.png
+│   │       logomarca ctt png.png
+│   │       logomarca-ctt.jpg
+│   │
+│   └───js
+│           main.js
+│
+├───public
+│   │   alas.php
+│   │   cadastro.php
+│   │   equipamentos.php
+│   │   index.php
+│   │   layout.php
+│   │   login.php
+│   │   logout.php
+│   │   perfil.php
+│   │
+│   ├───admin
+│   │       equipamentos_problema.php
+│   │       paineladm.php
+│   │       prestadores.php
+│   │       relatorios.php
+│   │       usuarios.php
+│   │
+│   └───user
+│           alas.php
+│           equipamentos.php
+│           index.php
+│           perfil.php
+│           reportar_problema.php
+│
+└───uploads
+    │   .htaccess
+    │
+    └───equipamentos
+            68e5abd72cb02.jpeg
+            68fb5f452c787.jpg
+            68fb83be6feb1.webp
+            68fb83f4ce474.webp
+            69049c2f9c98f.jpeg
+            69049cb37fc54.jpeg
+            6916112415dc1.webp
+            6916115daec51.webp
+            6920988d86d3b.jpeg
+            692098add78cb.jpeg
+            69209e489b7b0.jpeg
+            6921cf7d81672.jpeg
+            6921d169acf06.webp
+            6921d28da4527.webp
 ```
 
 ## 🎨 Tecnologias Utilizadas
@@ -172,4 +221,4 @@ Este sistema foi desenvolvido para uso interno da instituição.
 
 ---
 
-**Desenvolvido com ❤️ para GestCTT**
+**Desenvolvido para GestCTT**
