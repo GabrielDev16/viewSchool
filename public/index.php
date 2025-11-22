@@ -2,56 +2,54 @@
 require_once '../app/config/auth_admin.php';
 require_once '../app/config/init.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
+// Dashboard stats
 $page_title = 'Dashboard';
 
-// Get statistics
-$total_alas_sql = "SELECT COUNT(*) as total FROM ala WHERE status = 'ativo'";
-$total_alas = $conn->query($total_alas_sql)->fetch_assoc()['total'];
+$total_alas = $conn->query("SELECT COUNT(*) as total FROM ala WHERE status='ativo'")->fetch_assoc()['total'];
+$total_equipamentos = $conn->query("SELECT COUNT(*) as total FROM equipamentos WHERE status='ativo'")->fetch_assoc()['total'];
+$equipamentos_problema = $conn->query("SELECT COUNT(*) as total FROM equipamentos WHERE status='problema'")->fetch_assoc()['total'];
+$total_usuarios = $conn->query("SELECT COUNT(*) as total FROM usuarios WHERE status='ativo'")->fetch_assoc()['total'];
 
-$total_equipamentos_sql = "SELECT COUNT(*) as total FROM equipamentos WHERE status = 'ativo'";
-$total_equipamentos = $conn->query($total_equipamentos_sql)->fetch_assoc()['total'];
+// Recent equipment
+$recent_equipamentos = $conn->query("SELECT e.*, a.nome as ala_nome FROM equipamentos e LEFT JOIN ala a ON e.fk_ala=a.id WHERE e.status='ativo' ORDER BY e.id DESC LIMIT 6");
 
-$equipamentos_problema_sql = "SELECT COUNT(*) as total FROM equipamentos WHERE status = 'problema'";
-$equipamentos_problema = $conn->query($equipamentos_problema_sql)->fetch_assoc()['total'];
-
-$total_usuarios_sql = "SELECT COUNT(*) as total FROM usuarios WHERE status = 'ativo'";
-$total_usuarios = $conn->query($total_usuarios_sql)->fetch_assoc()['total'];
-
-// Get recent equipment
-$recent_equipamentos_sql = "SELECT e.*, a.nome as ala_nome FROM equipamentos e 
-                           LEFT JOIN ala a ON e.fk_ala = a.id 
-                           WHERE e.status = 'ativo' 
-                           ORDER BY e.id DESC LIMIT 6";
-$recent_equipamentos = $conn->query($recent_equipamentos_sql);
-
-// parte de dados para o gráfico de equipamentos
-
-// Contar quantos equipamentos existem em cada status
-$contador = "SELECT status, COUNT(*) AS total FROM equipamentos GROUP BY status";
-$result = $conn->query($contador);
-
-$labels = [];
-$data = [];
-
-while ($row = $result->fetch_assoc()) {
-    $labels[] = ucfirst($row['status']); // Ativo, Inativo, Problema
-    $data[] = (int)$row['total'];
+// Gráfico 1: Equipamentos por status
+$equip_status = $conn->query("SELECT status, COUNT(*) AS total FROM equipamentos GROUP BY status");
+$labelsEquip = [];
+$dataEquip = [];
+while ($row = $equip_status->fetch_assoc()) {
+    $labelsEquip[] = ucfirst($row['status']);
+    $dataEquip[] = (int)$row['total'];
 }
+$labelsEquip_json = json_encode($labelsEquip);
+$dataEquip_json = json_encode($dataEquip);
 
-// Transformando para JSON para usar no JS
-$labels_json = json_encode($labels);
-$data_json = json_encode($data);
+// Gráfico 2: Evolução mensal dos equipamentos
+$equip_mes = $conn->query("SELECT DATE_FORMAT(created_at,'%Y-%m') as mes, status, COUNT(*) as total FROM equipamentos GROUP BY mes, status ORDER BY mes");
+$meses = [];
+$dadosMes = ['ativo' => [], 'inativo' => [], 'problema' => []];
+while ($row = $equip_mes->fetch_assoc()) {
+    $mes = $row['mes'];
+    $status = $row['status'];
+    $total = (int)$row['total'];
 
-
-// gráfico de evolução de problemas por mês afim de validar a situação mensal do sistema
-
-
+    if (!in_array($mes, $meses)) {
+        $meses[] = $mes;
+        foreach ($dadosMes as $s => $arr) {
+            $dadosMes[$s][$mes] = 0;
+        }
+    }
+    $dadosMes[$status][$mes] = $total;
+}
+$labelsMes_json = json_encode($meses);
+$ativo_json = json_encode(array_values($dadosMes['ativo']));
+$inativo_json = json_encode(array_values($dadosMes['inativo']));
+$problema_json = json_encode(array_values($dadosMes['problema']));
 ?>
 
 <?php include '../app/views/includes/header.php'; ?>
@@ -66,64 +64,116 @@ $data_json = json_encode($data);
                     <p class="text-muted">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</p>
                 </div>
 
-                <!-- gráficos de situações resumidas dos equipamentos -->
-                <div class="container">
+                <!-- Gráficos -->
+                <div class="container mb-2">
                     <div class="row">
-                        <div class="col-md-6 col-12">
-                            <!-- Conteúdo da primeira coluna -->
-                            <h3 class="text-center mt-2">Situção por Equipamentos</h3>
+                        <!-- Gráfico 1 -->
+                        <div class="col-md-6 col-12 card d-flex justify-content-center align-items-center mb-4">
+                            <h3 class="text-center mt-2">Situação por Equipamentos</h3>
                             <div class="container m-5">
-                                <div class="row  d-flex justify-content-center">
+                                <div class="row d-flex justify-content-center align-items-center">
                                     <div class="col-md-6 col-12">
                                         <canvas id="statusChart"></canvas>
                                     </div>
                                 </div>
                             </div>
-
-                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-                            <script>
-                                const ctx = document.getElementById('statusChart').getContext('2d');
-
-                                const statusChart = new Chart(ctx, {
-                                    type: 'pie', // você pode mudar para 'bar' se quiser barras
-                                    data: {
-                                        labels: <?php echo $labels_json; ?>,
-                                        datasets: [{
-                                            label: 'Quantidade de Equipamentos',
-                                            data: <?php echo $data_json; ?>,
-                                            backgroundColor: [
-                                                'rgba(75, 192, 192, 0.6)', // Ativo
-                                                'rgba(255, 205, 86, 0.6)', // Inativo
-                                                'rgba(255, 99, 132, 0.6)' // Problema
-                                            ],
-                                            borderColor: [
-                                                'rgba(75, 192, 192, 1)',
-                                                'rgba(255, 205, 86, 1)',
-                                                'rgba(255, 99, 132, 1)'
-                                            ],
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        plugins: {
-                                            legend: {
-                                                position: 'bottom'
-                                            }
-                                        }
-                                    }
-                                });
-                            </script>
                         </div>
 
-
-                        <div class="col-md-6 col-12">
-                            <!-- Conteúdo da segunda coluna -->
-                            <p>Coluna 2</p>
+                        <!-- Gráfico 2 -->
+                        <div class="col-md-6 col-12 card d-flex justify-content-center align-items-center mb-4">
+                            <h3 class="text-center mt-2">Evolução Mensal</h3>
+                            <div class="container m-5">
+                                <div class="row d-flex justify-content-center align-items-center">
+                                    <div class="col-md-10 col-12">
+                                        <canvas id="evolucaoChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    // Gráfico 1: Situação por Equipamentos
+                    const ctxStatus = document.getElementById('statusChart').getContext('2d');
+                    const statusChart = new Chart(ctxStatus, {
+                        type: 'pie',
+                        data: {
+                            labels: <?php echo $labelsEquip_json; ?>,
+                            datasets: [{
+                                label: 'Quantidade de Equipamentos',
+                                data: <?php echo $dataEquip_json; ?>,
+                                backgroundColor: [
+                                    'rgba(75, 192, 192, 0.6)',
+                                    'rgba(255, 205, 86, 0.6)',
+                                    'rgba(255, 99, 132, 0.6)'
+                                ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(255, 205, 86, 1)',
+                                    'rgba(255, 99, 132, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+
+                    // Gráfico 2: Evolução Mensal
+                    const ctxEvolucao = document.getElementById('evolucaoChart').getContext('2d');
+                    const evolucaoChart = new Chart(ctxEvolucao, {
+                        type: 'line',
+                        data: {
+                            labels: <?php echo $labelsMes_json; ?>,
+                            datasets: [{
+                                    label: 'Ativo',
+                                    data: <?php echo $ativo_json; ?>,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    fill: false,
+                                    tension: 0.2
+                                },
+                                {
+                                    label: 'Inativo',
+                                    data: <?php echo $inativo_json; ?>,
+                                    borderColor: 'rgba(255, 205, 86, 1)',
+                                    backgroundColor: 'rgba(255, 205, 86, 0.2)',
+                                    fill: false,
+                                    tension: 0.2
+                                },
+                                {
+                                    label: 'Problema',
+                                    data: <?php echo $problema_json; ?>,
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    fill: false,
+                                    tension: 0.2
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
 
 
                 <!-- Statistics Cards -->
