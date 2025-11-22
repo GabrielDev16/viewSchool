@@ -29,6 +29,29 @@ $recent_equipamentos_sql = "SELECT e.*, a.nome as ala_nome FROM equipamentos e
                            WHERE e.status = 'ativo' 
                            ORDER BY e.id DESC LIMIT 6";
 $recent_equipamentos = $conn->query($recent_equipamentos_sql);
+
+// parte de dados para o gráfico de equipamentos
+
+// Contar quantos equipamentos existem em cada status
+$contador = "SELECT status, COUNT(*) AS total FROM equipamentos GROUP BY status";
+$result = $conn->query($contador);
+
+$labels = [];
+$data = [];
+
+while ($row = $result->fetch_assoc()) {
+    $labels[] = ucfirst($row['status']); // Ativo, Inativo, Problema
+    $data[] = (int)$row['total'];
+}
+
+// Transformando para JSON para usar no JS
+$labels_json = json_encode($labels);
+$data_json = json_encode($data);
+
+
+// gráfico de evolução de problemas por mês afim de validar a situação mensal do sistema
+
+
 ?>
 
 <?php include '../app/views/includes/header.php'; ?>
@@ -42,6 +65,66 @@ $recent_equipamentos = $conn->query($recent_equipamentos_sql);
                     <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
                     <p class="text-muted">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</p>
                 </div>
+
+                <!-- gráficos de situações resumidas dos equipamentos -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <!-- Conteúdo da primeira coluna -->
+                            <h3 class="text-center mt-2">Situção por Equipamentos</h3>
+                            <div class="container m-5">
+                                <div class="row  d-flex justify-content-center">
+                                    <div class="col-md-6 col-12">
+                                        <canvas id="statusChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                            <script>
+                                const ctx = document.getElementById('statusChart').getContext('2d');
+
+                                const statusChart = new Chart(ctx, {
+                                    type: 'pie', // você pode mudar para 'bar' se quiser barras
+                                    data: {
+                                        labels: <?php echo $labels_json; ?>,
+                                        datasets: [{
+                                            label: 'Quantidade de Equipamentos',
+                                            data: <?php echo $data_json; ?>,
+                                            backgroundColor: [
+                                                'rgba(75, 192, 192, 0.6)', // Ativo
+                                                'rgba(255, 205, 86, 0.6)', // Inativo
+                                                'rgba(255, 99, 132, 0.6)' // Problema
+                                            ],
+                                            borderColor: [
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(255, 205, 86, 1)',
+                                                'rgba(255, 99, 132, 1)'
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                position: 'bottom'
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                        </div>
+
+
+                        <div class="col-md-6 col-12">
+                            <!-- Conteúdo da segunda coluna -->
+                            <p>Coluna 2</p>
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Statistics Cards -->
                 <div class="row mb-4">
