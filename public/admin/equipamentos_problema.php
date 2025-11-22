@@ -1,10 +1,10 @@
 <?php
-require_once '../app/config/auth_admin.php';
-require_once '../app/config/init.php';
+require_once '../../app/config/auth_admin.php';
+require_once '../../app/config/init.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit();
 }
 
@@ -46,9 +46,9 @@ $alas_sql = "SELECT id, nome FROM ala WHERE status = 'ativo' ORDER BY nome";
 $alas_result = $conn->query($alas_sql);
 ?>
 
-<?php include '../app/views/includes/header.php'; ?>
+<?php include '../../app/views/includes/header.php'; ?>
 
-<?php include '../app/views/includes/navbar.php'; ?>
+<?php include '../../app/views/includes/navbar.php'; ?>
 
 <div class="container-fluid">
     <div class="row">
@@ -59,12 +59,11 @@ $alas_result = $conn->query($alas_sql);
                         <h2><i class="bi bi-exclamation-triangle"></i> Equipamentos com Problema</h2>
                         <p class="text-muted">Lista de equipamentos marcados como problema</p>
                     </div>
-                    <a href="equipamentos.php" class="btn btn-secondary btn-custom">
+                    <a href="../equipamentos.php" class="btn btn-secondary btn-custom">
                         <i class="bi bi-arrow-left"></i> Voltar
                     </a>
                 </div>
 
-```
             <?php if (!empty($message)): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="bi bi-check-circle"></i> <?php echo $message; ?>
@@ -128,10 +127,10 @@ $alas_result = $conn->query($alas_sql);
                                     <?php while ($equip = $equipamentos_result->fetch_assoc()): ?>
                                         <tr>
                                             <td>
-                                                <?php if (!empty($equip['imagem']) && file_exists('../' . $equip['imagem'])): ?>
-                                                    <img src="../<?php echo htmlspecialchars($equip['imagem']); ?>" alt="<?php echo htmlspecialchars($equip['nome']); ?>" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                                <?php if (!empty($equip['imagem']) && file_exists('../../' . $equip['imagem'])): ?>
+                                                    <img src="../../<?php echo htmlspecialchars($equip['imagem']); ?>" alt="<?php echo htmlspecialchars($equip['nome']); ?>" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
                                                 <?php else: ?>
-                                                    <img src="../assets/img/LogoGestCTT.png" alt="Sem imagem" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                                    <img src="../../assets/img/LogoGestCTT.png" alt="Sem imagem" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
                                                 <?php endif; ?>
                                             </td>
                                             <td><strong><?php echo htmlspecialchars($equip['nome']); ?></strong></td>
@@ -142,10 +141,10 @@ $alas_result = $conn->query($alas_sql);
                                             </td>
                                             <td><?php echo htmlspecialchars($equip['numero_tombamento']); ?></td>
                                             <td>
-                                                <a href="equipamentos.php?action=view&id=<?php echo $equip['id']; ?>" class="btn btn-sm btn-info">
+                                                <a href="../equipamentos.php?action=view&id=<?php echo $equip['id']; ?>" class="btn btn-sm btn-info">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
-                                                <a href="equipamentos.php?action=edit&id=<?php echo $equip['id']; ?>" class="btn btn-sm btn-warning">
+                                                <a href="../equipamentos.php?action=edit&id=<?php echo $equip['id']; ?>" class="btn btn-sm btn-warning">
                                                     <i class="bi bi-pencil"></i>
                                                 </a>
                                                 <form method="POST" style="display:inline;" onsubmit="return confirm('Deseja realmente desativar este equipamento?');">
@@ -169,8 +168,7 @@ $alas_result = $conn->query($alas_sql);
         </div>
     </main>
 </div>
-```
 
 </div>
 
-<?php include '../app/views/includes/footer.php'; ?>
+<?php include '../../app/views/includes/footer.php'; ?>
