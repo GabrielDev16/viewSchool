@@ -1,5 +1,5 @@
 <?php
-require_once '/..app/config/auth_admin.php';
+require_once '../app/config/auth_admin.php';
 require_once '../app/config/init.php';
 
 // Verifica se o usuário está logado
